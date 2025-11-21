@@ -79,7 +79,7 @@
                             <GradientStop Color="#1976D2" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <Viewbox Margin="8,15,50,50" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Viewbox Margin="6,8,10,55" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="{Binding LineMarkerPreview, Mode=OneWay}"
                                    FontWeight="Bold"
                                    Foreground="White"/>
@@ -114,7 +114,7 @@
                             <GradientStop Color="#F57C00" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <Viewbox Margin="8,15,50,50" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Viewbox Margin="6,8,10,55" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="{Binding LoutMarkerPreview, Mode=OneWay}"
                                    FontWeight="Bold"
                                    Foreground="White"/>
