@@ -34,6 +34,9 @@ namespace LineHelper.ViewModels
         public string LineMarkerPreview => _session.GetLineMarker();
         public string LoutMarkerPreview => _session.GetLoutMarker();
 
+        public string LineStartIndicator => _session.HasLineBeenClicked ? "" : "START";
+        public string LoutStartIndicator => _session.HasLoutBeenClicked ? "" : "START";
+
         public string LineInHotkeyDisplay => _settings.GetLineInHotkeyDisplay();
         public string LineOutHotkeyDisplay => _settings.GetLineOutHotkeyDisplay();
 
@@ -61,6 +64,9 @@ namespace LineHelper.ViewModels
                 StatusMessage = $"Copied: {marker}";
                 _statusTimer.Stop();
                 _statusTimer.Start();
+
+                // Mark as clicked (removes START indicator)
+                _session.HasLineBeenClicked = true;
 
                 // Increment after copying
                 if (_session.CurrentLineNumber >= _session.MarkerRange)
@@ -93,6 +99,9 @@ namespace LineHelper.ViewModels
                 StatusMessage = $"Copied: {marker}";
                 _statusTimer.Stop();
                 _statusTimer.Start();
+
+                // Mark as clicked (removes START indicator)
+                _session.HasLoutBeenClicked = true;
 
                 // Increment after copying
                 if (_session.CurrentLoutNumber >= _session.MarkerRange)
@@ -187,6 +196,8 @@ namespace LineHelper.ViewModels
             OnPropertyChanged(nameof(CurrentLoutDisplay));
             OnPropertyChanged(nameof(LineMarkerPreview));
             OnPropertyChanged(nameof(LoutMarkerPreview));
+            OnPropertyChanged(nameof(LineStartIndicator));
+            OnPropertyChanged(nameof(LoutStartIndicator));
             OnPropertyChanged(nameof(CurrentLineProgress));
             OnPropertyChanged(nameof(CurrentLoutProgress));
             OnPropertyChanged(nameof(MarkerRange));

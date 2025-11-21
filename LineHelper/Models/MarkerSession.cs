@@ -8,6 +8,9 @@ namespace LineHelper.Models
         private int _currentLoutNumber = 1;
         private int _markerRange = 50;
 
+        public bool HasLineBeenClicked { get; set; } = false;
+        public bool HasLoutBeenClicked { get; set; } = false;
+
         public int CurrentLineNumber
         {
             get => _currentLineNumber;
@@ -73,6 +76,8 @@ namespace LineHelper.Models
         {
             CurrentLineNumber = 1;
             CurrentLoutNumber = 1;
+            HasLineBeenClicked = false;
+            HasLoutBeenClicked = false;
         }
 
         public bool IsLineAtLimit() => CurrentLineNumber >= MarkerRange;

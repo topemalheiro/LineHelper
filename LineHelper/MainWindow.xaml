@@ -79,11 +79,21 @@
                             <GradientStop Color="#1976D2" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <Viewbox Margin="6,8,10,55" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="{Binding LineMarkerPreview, Mode=OneWay}"
-                                   FontWeight="Bold"
-                                   Foreground="White"/>
-                    </Viewbox>
+                    <Grid>
+                        <Viewbox Margin="6,8,10,10" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="{Binding LineMarkerPreview, Mode=OneWay}"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                        </Viewbox>
+                        <TextBlock Text="{Binding LineStartIndicator, Mode=OneWay}"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"
+                                   Opacity="0.6"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   Margin="10,0,0,20"/>
+                    </Grid>
                 </Button>
 
                 <!-- Decrement Arrow for Line In -->
@@ -114,11 +124,21 @@
                             <GradientStop Color="#F57C00" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <Viewbox Margin="6,8,10,55" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="{Binding LoutMarkerPreview, Mode=OneWay}"
-                                   FontWeight="Bold"
-                                   Foreground="White"/>
-                    </Viewbox>
+                    <Grid>
+                        <Viewbox Margin="6,8,10,10" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="{Binding LoutMarkerPreview, Mode=OneWay}"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                        </Viewbox>
+                        <TextBlock Text="{Binding LoutStartIndicator, Mode=OneWay}"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="White"
+                                   Opacity="0.6"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   Margin="10,0,0,20"/>
+                    </Grid>
                 </Button>
 
                 <!-- Decrement Arrow for Line Out -->
