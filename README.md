@@ -31,7 +31,7 @@ A professional Windows desktop application designed for audio engineers to effic
 
 1. **Prerequisites**:
    - Install Visual Studio 2022 (Community Edition or higher)
-   - Install .NET 6.0 SDK
+   - Install .NET 8.0 SDK
    - Ensure "Desktop development with .NET" workload is installed
 
 2. **Build Steps**:
@@ -97,7 +97,7 @@ Click the gear icon to access settings:
 ## Troubleshooting
 
 ### Application Won't Start
-- Ensure .NET 6.0 Runtime is installed
+- Ensure .NET .0 Runtime is installed
 - Check Windows Event Viewer for error details
 - Run as Administrator if clipboard issues occur
 
