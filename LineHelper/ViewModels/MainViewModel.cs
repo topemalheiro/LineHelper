@@ -39,7 +39,8 @@ namespace LineHelper.ViewModels
 
         public string RangeDisplay => $"Range: 1-{_session.MarkerRange}";
 
-        public double ProgressValue => Math.Max(_session.CurrentLineNumber, _session.CurrentLoutNumber);
+        public int CurrentLineProgress => _session.CurrentLineNumber;
+        public int CurrentLoutProgress => _session.CurrentLoutNumber;
 
         public string StatusMessage
         {
@@ -55,16 +56,24 @@ namespace LineHelper.ViewModels
         {
             try
             {
-                var marker = _session.IncrementLine();
+                var marker = _session.GetLineMarker();
                 Clipboard.SetText(marker);
                 StatusMessage = $"Copied: {marker}";
                 _statusTimer.Stop();
                 _statusTimer.Start();
 
-                if (_session.IsLineAtLimit() && _settings.AutoResetAtLimit)
+                // Increment after copying
+                if (_session.CurrentLineNumber >= _session.MarkerRange)
                 {
-                    _session.CurrentLineNumber = 1;
-                    StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    if (_settings.AutoResetAtLimit)
+                    {
+                        _session.CurrentLineNumber = 1;
+                        StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    }
+                }
+                else
+                {
+                    _session.CurrentLineNumber++;
                 }
 
                 UpdateAllProperties();
@@ -79,16 +88,24 @@ namespace LineHelper.ViewModels
         {
             try
             {
-                var marker = _session.IncrementLout();
+                var marker = _session.GetLoutMarker();
                 Clipboard.SetText(marker);
                 StatusMessage = $"Copied: {marker}";
                 _statusTimer.Stop();
                 _statusTimer.Start();
 
-                if (_session.IsLoutAtLimit() && _settings.AutoResetAtLimit)
+                // Increment after copying
+                if (_session.CurrentLoutNumber >= _session.MarkerRange)
                 {
-                    _session.CurrentLoutNumber = 1;
-                    StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    if (_settings.AutoResetAtLimit)
+                    {
+                        _session.CurrentLoutNumber = 1;
+                        StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    }
+                }
+                else
+                {
+                    _session.CurrentLoutNumber++;
                 }
 
                 UpdateAllProperties();
@@ -102,12 +119,36 @@ namespace LineHelper.ViewModels
         public void DecrementLine()
         {
             _session.DecrementLine();
+            try
+            {
+                var marker = _session.GetLineMarker();
+                Clipboard.SetText(marker);
+                StatusMessage = $"Copied: {marker} (decremented)";
+                _statusTimer.Stop();
+                _statusTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error: {ex.Message}";
+            }
             UpdateAllProperties();
         }
 
         public void DecrementLout()
         {
             _session.DecrementLout();
+            try
+            {
+                var marker = _session.GetLoutMarker();
+                Clipboard.SetText(marker);
+                StatusMessage = $"Copied: {marker} (decremented)";
+                _statusTimer.Stop();
+                _statusTimer.Start();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error: {ex.Message}";
+            }
             UpdateAllProperties();
         }
 
@@ -122,6 +163,13 @@ namespace LineHelper.ViewModels
 
         public void UpdateSettings(UserSettings newSettings)
         {
+            // Copy new settings to ensure hotkey display updates
+            typeof(UserSettings).GetProperty(nameof(UserSettings.LineInHotkey))?.SetValue(_settings, newSettings.LineInHotkey);
+            typeof(UserSettings).GetProperty(nameof(UserSettings.LineOutHotkey))?.SetValue(_settings, newSettings.LineOutHotkey);
+            typeof(UserSettings).GetProperty(nameof(UserSettings.LineInModifiers))?.SetValue(_settings, newSettings.LineInModifiers);
+            typeof(UserSettings).GetProperty(nameof(UserSettings.LineOutModifiers))?.SetValue(_settings, newSettings.LineOutModifiers);
+            typeof(UserSettings).GetProperty(nameof(UserSettings.AutoResetAtLimit))?.SetValue(_settings, newSettings.AutoResetAtLimit);
+
             _session.MarkerRange = newSettings.MarkerRange;
 
             // Reset if current numbers exceed new range
@@ -139,7 +187,8 @@ namespace LineHelper.ViewModels
             OnPropertyChanged(nameof(CurrentLoutDisplay));
             OnPropertyChanged(nameof(LineMarkerPreview));
             OnPropertyChanged(nameof(LoutMarkerPreview));
-            OnPropertyChanged(nameof(ProgressValue));
+            OnPropertyChanged(nameof(CurrentLineProgress));
+            OnPropertyChanged(nameof(CurrentLoutProgress));
             OnPropertyChanged(nameof(MarkerRange));
             OnPropertyChanged(nameof(RangeDisplay));
             OnPropertyChanged(nameof(LineInHotkeyDisplay));

@@ -8,8 +8,8 @@ namespace LineHelper.Models
     public class UserSettings
     {
         public int MarkerRange { get; set; } = 50;
-        public string LineInHotkey { get; set; } = "Space";
-        public string LineOutHotkey { get; set; } = "Enter";
+        public string LineInHotkey { get; set; } = "F10";
+        public string LineOutHotkey { get; set; } = "F11";
         public ModifierKeys LineInModifiers { get; set; } = ModifierKeys.None;
         public ModifierKeys LineOutModifiers { get; set; } = ModifierKeys.None;
         public bool AutoResetAtLimit { get; set; } = false;

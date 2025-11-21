@@ -4,92 +4,67 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="LineHelper - Marker Tracker"
-        Height="450" Width="400"
-        MinHeight="400" MinWidth="350"
+        Title="LineHelper"
+        Height="310" Width="340"
+        MinHeight="260" MinWidth="290"
         WindowStartupLocation="Manual"
         ResizeMode="CanResize"
-        Background="#F5F5F5">
+        Background="{DynamicResource WindowBackgroundBrush}"
+        x:Name="MainWindowRoot">
 
-    <Grid Margin="15">
+    <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header with Settings Button -->
-        <Grid Grid.Row="0" Margin="0,0,0,15">
+        <!-- Header Strip: Marker Tracker (Left) | Status (Center) | Gear (Right) -->
+        <Grid Grid.Row="0" Margin="0,0,0,5">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Marker Tracker"
-                       FontSize="24"
-                       FontWeight="SemiBold"
-                       Foreground="#333333"/>
+            <!-- Marker Tracker (Left) -->
+            <TextBlock Grid.Column="0"
+                       Text="Marker Tracker"
+                       FontSize="14"
+                       FontWeight="Light"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource HeaderTextBrush}"/>
 
-            <Button Grid.Column="1"
+            <!-- Status Message (Center) -->
+            <TextBlock Grid.Column="1"
+                       Text="{Binding StatusMessage, Mode=OneWay}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="13"
+                       FontStyle="Italic"
+                       Foreground="{DynamicResource StatusTextBrush}"/>
+
+            <!-- Settings Button (Right) -->
+            <Button Grid.Column="2"
                     Name="SettingsButton"
                     Click="SettingsButton_Click"
                     Style="{StaticResource IconButton}"
                     ToolTip="Settings"
-                    Width="32" Height="32">
+                    Width="24" Height="24"
+                    VerticalAlignment="Center">
                 <Path Data="M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5a3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97c0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.08-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1c0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66Z"
-                      Fill="#666666"
+                      Fill="{DynamicResource IconBrush}"
                       Stretch="Uniform"
-                      Width="20" Height="20"/>
+                      Width="14" Height="14"/>
             </Button>
         </Grid>
 
-        <!-- Current Status Display -->
-        <Border Grid.Row="1"
-                Background="White"
-                CornerRadius="8"
-                Padding="15"
-                Margin="0,0,0,15"
-                BorderBrush="#E0E0E0"
-                BorderThickness="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" HorizontalAlignment="Center">
-                        <Run Text="LINE IN: " FontWeight="SemiBold" Foreground="#666"/>
-                        <Run Text="{Binding CurrentLineDisplay, Mode=OneWay}" FontWeight="Bold" FontSize="16" Foreground="#2196F3"/>
-                    </TextBlock>
-
-                    <TextBlock Grid.Column="1" HorizontalAlignment="Center">
-                        <Run Text="LINE OUT: " FontWeight="SemiBold" Foreground="#666"/>
-                        <Run Text="{Binding CurrentLoutDisplay, Mode=OneWay}" FontWeight="Bold" FontSize="16" Foreground="#FF9800"/>
-                    </TextBlock>
-                </Grid>
-
-                <TextBlock Grid.Row="1"
-                           Text="{Binding StatusMessage, Mode=OneWay}"
-                           HorizontalAlignment="Center"
-                           Margin="0,10,0,0"
-                           FontStyle="Italic"
-                           Foreground="#888888"/>
-            </Grid>
-        </Border>
-
         <!-- Main Buttons Area -->
-        <Grid Grid.Row="2" Margin="0,10">
+        <Grid Grid.Row="1" Margin="0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -104,19 +79,11 @@
                             <GradientStop Color="#1976D2" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <StackPanel>
-                        <TextBlock Text="LINE IN"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"/>
+                    <Viewbox Margin="8,15,50,50" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="{Binding LineMarkerPreview, Mode=OneWay}"
-                                   FontSize="14"
-                                   Foreground="White"
-                                   Opacity="0.9"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                    </StackPanel>
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                    </Viewbox>
                 </Button>
 
                 <!-- Decrement Arrow for Line In -->
@@ -147,19 +114,11 @@
                             <GradientStop Color="#F57C00" Offset="1"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <StackPanel>
-                        <TextBlock Text="LINE OUT"
-                                   FontSize="22"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"/>
+                    <Viewbox Margin="8,15,50,50" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="{Binding LoutMarkerPreview, Mode=OneWay}"
-                                   FontSize="14"
-                                   Foreground="White"
-                                   Opacity="0.9"
-                                   Margin="0,5,0,0"
-                                   HorizontalAlignment="Center"/>
-                    </StackPanel>
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                    </Viewbox>
                 </Button>
 
                 <!-- Decrement Arrow for Line Out -->
@@ -180,45 +139,65 @@
             </Grid>
         </Grid>
 
-        <!-- Progress Bar -->
-        <ProgressBar Grid.Row="3"
-                     Height="6"
-                     Margin="0,10,0,5"
-                     Maximum="{Binding MarkerRange, Mode=OneWay}"
-                     Value="{Binding ProgressValue, Mode=OneWay}"
-                     Foreground="#4CAF50"
-                     Background="#E0E0E0"
-                     BorderThickness="0"/>
+        <!-- Independent Progress Bars -->
+        <Grid Grid.Row="2" Margin="0,8,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LINE IN Progress Bar -->
+            <ProgressBar Grid.Column="0"
+                         Height="4"
+                         Maximum="{Binding MarkerRange, Mode=OneWay}"
+                         Value="{Binding CurrentLineProgress, Mode=OneWay}"
+                         Foreground="#2196F3"
+                         Background="#E0E0E0"
+                         BorderThickness="0"/>
+
+            <!-- LINE OUT Progress Bar -->
+            <ProgressBar Grid.Column="2"
+                         Height="4"
+                         Maximum="{Binding MarkerRange, Mode=OneWay}"
+                         Value="{Binding CurrentLoutProgress, Mode=OneWay}"
+                         Foreground="#FF9800"
+                         Background="#E0E0E0"
+                         BorderThickness="0"/>
+        </Grid>
 
         <!-- Footer with Reset and Keyboard Shortcuts -->
-        <Grid Grid.Row="4" Margin="0,10,0,0">
+        <Grid Grid.Row="3" Margin="0,5,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0"
-                    Name="ResetButton"
-                    Click="ResetButton_Click"
-                    Content="Reset"
-                    Style="{StaticResource SecondaryButton}"
-                    Width="80"/>
+            <TextBlock Grid.Column="0"
+                       Text="{Binding RangeDisplay, Mode=OneWay}"
+                       VerticalAlignment="Center"
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextBrush}"/>
 
             <TextBlock Grid.Column="1"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Foreground="#888">
+                       FontSize="12"
+                       Foreground="{DynamicResource SecondaryTextBrush}">
                 <Run Text="Keys: "/>
                 <Run Text="{Binding LineInHotkeyDisplay, Mode=OneWay}" FontWeight="SemiBold"/>
                 <Run Text=" / "/>
                 <Run Text="{Binding LineOutHotkeyDisplay, Mode=OneWay}" FontWeight="SemiBold"/>
             </TextBlock>
 
-            <TextBlock Grid.Column="2"
-                       Text="{Binding RangeDisplay, Mode=OneWay}"
-                       VerticalAlignment="Center"
-                       Foreground="#888"/>
+            <Button Grid.Column="2"
+                    Name="ResetButton"
+                    Click="ResetButton_Click"
+                    Content="Reset"
+                    Style="{StaticResource SecondaryButton}"
+                    Padding="15,5"
+                    FontSize="12"/>
         </Grid>
     </Grid>
 </Window>
