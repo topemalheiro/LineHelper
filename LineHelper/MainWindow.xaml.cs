@@ -46,8 +46,12 @@ namespace LineHelper
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
 
-            // Set up keyboard shortcuts after window is loaded (so we have a handle)
-            Loaded += (s, e) => SetupKeyboardShortcuts();
+            // Set up keyboard shortcuts and title bar after window is loaded (so we have a handle)
+            Loaded += (s, e) =>
+            {
+                SetupKeyboardShortcuts();
+                SetTitleBarTheme(_settings.Theme == "Dark");
+            };
         }
 
         private void SetupKeyboardShortcuts()
