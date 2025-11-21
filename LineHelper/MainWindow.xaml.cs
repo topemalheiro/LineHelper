@@ -150,6 +150,14 @@ namespace LineHelper
             }
         }
 
+        private void PinButton_Click(object sender, RoutedEventArgs e)
+        {
+            Topmost = !Topmost;
+
+            // Update pin icon opacity to show active state
+            PinIcon.Opacity = Topmost ? 1.0 : 0.6;
+        }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             var settingsWindow = new SettingsWindow(_settings);

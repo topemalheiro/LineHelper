@@ -59,28 +59,49 @@ namespace LineHelper.ViewModels
         {
             try
             {
-                var marker = _session.GetLineMarker();
-                Clipboard.SetText(marker);
-                StatusMessage = $"Copied: {marker}";
-                _statusTimer.Stop();
-                _statusTimer.Start();
+                // Mark as clicked first (removes START indicator)
+                if (!_session.HasLineBeenClicked)
+                {
+                    _session.HasLineBeenClicked = true;
+                    UpdateAllProperties();
 
-                // Mark as clicked (removes START indicator)
-                _session.HasLineBeenClicked = true;
+                    // First click: just copy line0001, don't increment
+                    var firstMarker = _session.GetLineMarker();
+                    Clipboard.SetText(firstMarker);
+                    StatusMessage = $"Copied: {firstMarker}";
+                    _statusTimer.Stop();
+                    _statusTimer.Start();
+                    return;
+                }
 
-                // Increment after copying
+                // Subsequent clicks: increment first, then copy the new number
                 if (_session.CurrentLineNumber >= _session.MarkerRange)
                 {
                     if (_settings.AutoResetAtLimit)
                     {
                         _session.CurrentLineNumber = 1;
-                        StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    }
+                    else
+                    {
+                        // At limit and no auto-reset, just copy current
+                        var marker = _session.GetLineMarker();
+                        Clipboard.SetText(marker);
+                        StatusMessage = $"Copied: {marker}";
+                        _statusTimer.Stop();
+                        _statusTimer.Start();
+                        return;
                     }
                 }
                 else
                 {
                     _session.CurrentLineNumber++;
                 }
+
+                var newMarker = _session.GetLineMarker();
+                Clipboard.SetText(newMarker);
+                StatusMessage = $"Copied: {newMarker}";
+                _statusTimer.Stop();
+                _statusTimer.Start();
 
                 UpdateAllProperties();
             }
@@ -94,28 +115,49 @@ namespace LineHelper.ViewModels
         {
             try
             {
-                var marker = _session.GetLoutMarker();
-                Clipboard.SetText(marker);
-                StatusMessage = $"Copied: {marker}";
-                _statusTimer.Stop();
-                _statusTimer.Start();
+                // Mark as clicked first (removes START indicator)
+                if (!_session.HasLoutBeenClicked)
+                {
+                    _session.HasLoutBeenClicked = true;
+                    UpdateAllProperties();
 
-                // Mark as clicked (removes START indicator)
-                _session.HasLoutBeenClicked = true;
+                    // First click: just copy lout0001, don't increment
+                    var firstMarker = _session.GetLoutMarker();
+                    Clipboard.SetText(firstMarker);
+                    StatusMessage = $"Copied: {firstMarker}";
+                    _statusTimer.Stop();
+                    _statusTimer.Start();
+                    return;
+                }
 
-                // Increment after copying
+                // Subsequent clicks: increment first, then copy the new number
                 if (_session.CurrentLoutNumber >= _session.MarkerRange)
                 {
                     if (_settings.AutoResetAtLimit)
                     {
                         _session.CurrentLoutNumber = 1;
-                        StatusMessage = $"Copied: {marker} (Auto-reset)";
+                    }
+                    else
+                    {
+                        // At limit and no auto-reset, just copy current
+                        var marker = _session.GetLoutMarker();
+                        Clipboard.SetText(marker);
+                        StatusMessage = $"Copied: {marker}";
+                        _statusTimer.Stop();
+                        _statusTimer.Start();
+                        return;
                     }
                 }
                 else
                 {
                     _session.CurrentLoutNumber++;
                 }
+
+                var newMarker = _session.GetLoutMarker();
+                Clipboard.SetText(newMarker);
+                StatusMessage = $"Copied: {newMarker}";
+                _statusTimer.Stop();
+                _statusTimer.Start();
 
                 UpdateAllProperties();
             }

@@ -28,13 +28,27 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Marker Tracker (Left) -->
-            <TextBlock Grid.Column="0"
-                       Text="Marker Tracker"
-                       FontSize="12"
-                       FontWeight="Light"
-                       VerticalAlignment="Center"
-                       Foreground="{DynamicResource HeaderTextBrush}"/>
+            <!-- Marker Tracker (Left) with Pin Button -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Marker Tracker"
+                           FontSize="12"
+                           FontWeight="Light"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource HeaderTextBrush}"/>
+                <Button Name="PinButton"
+                        Click="PinButton_Click"
+                        Style="{StaticResource IconButton}"
+                        ToolTip="Toggle Always on Top"
+                        Width="16" Height="16"
+                        Margin="6,0,0,0"
+                        VerticalAlignment="Center">
+                    <Path Name="PinIcon" Data="M16,12V4H17V2H7V4H8V12L6,14V16H11.2V22H12.8V16H18V14L16,12Z"
+                          Fill="{DynamicResource IconBrush}"
+                          Stretch="Uniform"
+                          Width="10" Height="10"
+                          Opacity="0.6"/>
+                </Button>
+            </StackPanel>
 
             <!-- Status Message (Center) -->
             <TextBlock Grid.Column="1"
