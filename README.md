@@ -1,6 +1,7 @@
 # LineHelper - Marker Tracking Tool
 
 Here is a small video explaining it: https://www.youtube.com/watch?v=2GdzmFteyRk 
+
 A professional Windows desktop application designed for audio engineers to efficiently track and manage markers during editing sessions. Built with C# and WPF for optimal touch screen support and clipboard integration.
 
 ## Features
