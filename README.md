@@ -37,7 +37,7 @@ A professional Windows desktop application designed for audio engineers to effic
 2. **Build Steps**:
    ```bash
    # Clone or download the project
-   cd "C:\Users\topem\Desktop\Mochi Project\LineHelper"
+   cd to where you want
 
    # Build using dotnet CLI
    dotnet build --configuration Release
